@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         personasRef = database.getReference("persona")
         listarPersonas()
 
+
     }
     private fun listarPersonas() {
         personasRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         personasRef.child(personaId!!).setValue(persona)
     }
 
-            // Modificar una persona en la base de datos
+
     private fun modificarPersona(personaId: String, nombre:String) {
         val persona = Persona(nombre)
         personasRef.child(personaId).setValue(persona)
