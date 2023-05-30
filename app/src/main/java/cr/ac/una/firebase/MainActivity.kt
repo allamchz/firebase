@@ -25,14 +25,8 @@ class MainActivity : AppCompatActivity() {
         listarPersonas()
 
     }
-    private fun crearPersona(){
-        // Agregar una persona a la base de datos
-        val persona = Persona("Allam Chaves")
-        val personaId = personasRef.push().key
-        personasRef.child(personaId!!).setValue(persona)
-    }
     private fun listarPersonas() {
-        personasRef.addValueEventListener(object : ValueEventListener {
+        personasRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 personaList.clear()
                 for (dataSnapshot in snapshot.children) {
@@ -51,9 +45,21 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-    // Modificar una persona en la base de datos
+
+    private fun crearPersona(){
+        // Agregar una persona a la base de datos
+        val persona = Persona("Allam Chaves")
+        val personaId = personasRef.push().key
+        personasRef.child(personaId!!).setValue(persona)
+    }
+
+            // Modificar una persona en la base de datos
     private fun modificarPersona(personaId: String, nombre:String) {
         val persona = Persona(nombre)
         personasRef.child(personaId).setValue(persona)
+    }
+    private fun deletePersona(personaId: String) {
+        val persona = personasRef.child(personaId)
+        persona.removeValue()
     }
 }
